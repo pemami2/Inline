@@ -1,0 +1,182 @@
+<!-- Top navigation -->
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" routerLink="/register-student">
+    <img class="brand-logo" src="assets/logo.svg" alt="Logo">
+    
+    <span class="dasboard-text">Dashboard</span>
+    <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                alt="{{user.displayName}}">
+  </a>
+</nav>
+
+<!-- Sidebar navigation -->
+<div class="container-fluid">
+  <div class="row">
+
+    <nav class="col-md-2 d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active">
+              <i class="fas fa-user"></i>Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"(click)="openModal('Profile')">
+              <i class="fas fa-user"></i>Profile
+            </a>
+          </li>
+          <!-- Calling SignOut() Api from AuthService -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.SignOut()">
+              <i class="fas fa-sign-out-alt"></i>Log out
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="inner-adjust">
+
+        <div class="pt-3 pb-2 mb-3 border-bottom">
+        </div>
+        <!-- Show user data when logged in -->
+        <div class="row" *ngIf="authService.userData as user">
+          <div class="col-md-12">
+            <div class="media">
+              <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                alt="{{user.displayName}}">
+              <div class="media-body">
+                <h1>Hello: <strong>{{(user.displayName) ? user.displayName : ((user.phoneNumber) ? user.phoneNumber : 'User')}}</strong></h1>
+                <p *ngIf="(authService.customclaims$ | async)?.techSupport">Role:<strong>Tech support</strong></p>
+                <div *ngFor="let Owner of Owners | async">
+                  <h3>{{Owner.tablearray[0].name}}</h3>
+                </div>
+                <jw-modal id="custom-modal-2">
+                  <h1 >Add Customer</h1>
+                  <p>Customer Name:<input type="text" [(ngModel)]="name" /></p>
+                  <p>Party Size:<input type="text" [(ngModel)]="size" /></p>
+                  <p>Phone Number:<input type="text" [(ngModel)]="phone" /></p>
+                  <style>
+                    #session {
+                        display:none;
+                    }   
+                </style>
+                  <p id="session">{{user.uid}}</p>
+
+                  <button (click)="closeModal('custom-modal-2');onSave(user.uid);clear();">Save</button>
+                  <button (click)="closeModal('custom-modal-2');clear();">Close without saving changes</button>
+                </jw-modal>
+                <jw-modal id="custom-modal-3">
+                  <h1 >Edit Customer</h1>
+                  <p>Customer Name:<input type="text" [(ngModel)]="name" /></p>
+                  <p>Party Size:<input type="text" [(ngModel)]="size" /></p>
+                  <p>Phone Number:<input type="text" [(ngModel)]="phone" /></p>
+                  <style>
+                    #session {
+                        display:none;
+                    }   
+                </style>
+                  <p id="session">{{user.uid}}</p>
+                  <button (click)="closeModal('custom-modal-3');editPartySave(time, user.uid);clear();">Save</button>
+                  <button (click)="closeModal('custom-modal-3');clear();">Close without saving changes</button>
+                </jw-modal>
+                <jw-modal id="Profile">
+                  <div class="pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">User Profile</h1>
+                  </div>
+                  <div class="row" *ngIf="authService.userData as user">
+                    <div class="col-md-12">
+                      <div class="media">
+                        <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                          alt="{{user.displayName}}">
+                  
+                  <div class="media-body">
+                    <h1>Hello: <strong>{{(user.displayName) ? user.displayName : ((user.phoneNumber) ? user.phoneNumber : 'User')}}</strong></h1>
+                    <p>User ID: <strong>{{user.uid}}</strong></p>
+                    <p *ngIf="user.email">Email: <strong>{{user.email}}</strong></p>
+                    <p *ngIf="user.email">Email Verified: <strong>{{user.emailVerified}}</strong></p>
+                    <p *ngIf="user.phoneNumber">Phone: <strong>{{user.phoneNumber}}</strong></p>
+                    <button (click)="authService.SignOut()">Logout {{user.email}} </button>
+                    <button (click)="closeModal('Profile'); openModal('editProfile')">Edit Details</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+                </jw-modal>
+                <jw-modal id="editProfile">
+                  <div class="pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">User Profile</h1>
+                  </div>
+                  <div class="row" *ngIf="authService.userData as user">
+                    <div class="col-md-12">
+                      <div class="media">
+                        <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+                          alt="{{user.displayName}}">
+                  
+                  <div class="media-body">
+                    <h1>Hello: <strong>{{(user.displayName) ? user.displayName : ((user.phoneNumber) ? user.phoneNumber : 'User')}}</strong></h1>
+                    <p>User ID: <strong>{{user.uid}}</strong></p>
+                    <p *ngIf="user.email">Email: <strong>{{user.email}}</strong></p>
+                    <p *ngIf="user.email">Email Verified: <strong>{{user.emailVerified}}</strong></p>
+                    <p *ngIf="user.phoneNumber">Phone: <strong>{{user.phoneNumber}}</strong></p>
+                    <h1 >Edit Customer</h1>
+                  <p>PIN: <input type="text" [(ngModel)]="PIN" #userPIN /></p>
+                  <p>Tables: <input type="text" [(ngModel)]="tables" #userTables /></p>
+                  <p>Message: <textarea cols="30" rows="10" [(ngModel)]="message" #userMessage > </textarea></p>
+                  <button (click)="closeModal('editProfile');authService.SetUserDetails(user.uid, userPIN.value, userTables.value, userMessage.value)">Save</button>
+                  <button (click)="closeModal('editProfile');clear();">Close without saving changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+                </jw-modal>
+                <div class="pt-3 pb-2 mb-3 border-bottom">
+                  <h1 class="h1">Queue</h1>
+                </div>
+                
+                  <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Party Size</th>
+                          <th scope="col">Phone Number</th>
+                          <th scope="col">Waiting Time</th>
+
+                        </tr>
+                     </thead>
+                     <tbody>
+                      <tr mdbTableCol *ngFor="let list of ( owner | async )?.tablearray">
+                        <style>
+                          #session {
+                              display:none;
+                          }   
+                      </style>
+                        <p id="session">{{user.uid}}</p>
+                        <td>{{list.name}}</td>
+                        <td>{{list.size}}</td>
+                        <td>{{list.phone}}</td>
+                        <td>{{list.time}}</td>
+                        <td><button (click)="editParty(list.time, custom-modal-3)">Edit</button></td>
+
+                        <td><button (click)="removeparty(list.time, user.uid)">x</button></td>
+                    </tr>
+                  </tbody>
+               </table>
+               <button (click)="addcustomer();clear();">Add Customer</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+</div>

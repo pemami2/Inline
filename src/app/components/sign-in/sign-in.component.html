@@ -1,0 +1,91 @@
+<div class="displayTable">
+  <div class="displayTableCell">
+
+    <div class="authBlock">
+      <h3>Sign In</h3>
+
+      <div [hidden]="user" class="formGroup center">
+    
+        <div [hidden]="hideCaptcha" class="label">Resolve reCaptcha for phone login!
+          <div id="recaptcha-container"></div>
+        </div>
+       
+        <div style="margin-top: 10px;">
+            <div
+            style="float: left;
+            width: auto;
+            height: 33px;
+            padding: 6px 5px;
+            border: 0px solid #e7e7e7;
+            outline: none;
+            font-size: 15px;
+            font-weight: 700;
+            color: #444444;
+            background-color: transparent;
+            background: transparent;">+</div>
+            <input class="formControl left-div" style="width: 49px;" type="text" [(ngModel)]="phoneNumber.country" placeholder="1" maxlength="2">
+            <input class="formControl left-div" style="width: 69px;" type="text" [(ngModel)]="phoneNumber.area" placeholder="613"  maxlength="3">
+            <input class="formControl left-div" style="width: 69px;" type="text" [(ngModel)]="phoneNumber.prefix" placeholder="555"  maxlength="3">
+            <input class="formControl left-div" style="width: 68px;" type="text" [(ngModel)]="phoneNumber.line" placeholder="5555" maxlength="4">
+      
+            <button class="btn facebookBtn" [hidden]="hideSendSms" (click)="sendLoginCode()" style="margin-top: 10px;">SMS Text Login Code</button>
+         
+            <div class="formGroup" *ngIf="windowRef.confirmationResult" style="margin-top: 10px;">        
+              <input class="formControl left-div" type="text" name="code" style="width: 100%;" placeholder="Verification Code" [(ngModel)]="verificationCode">
+              <button class="btn btnPrimary" style="margin-top: 10px;" (click)="verifyLoginCode()">Log in with phone</button>
+            </div>
+          
+        </div>
+      </div>
+
+      <div class="formGroup">
+        <span class="or"><span class="orInner">Or</span></span>
+      </div>
+
+      <div class="formGroup">
+        <input type="text" class="formControl" placeholder="Username" #userName required>
+      </div>
+
+      <div class="formGroup">
+        <input type="password" class="formControl" placeholder="Password" #userPassword required>
+      </div>
+
+      <!-- Calling SignIn Api from AuthService -->
+      <div class="formGroup">
+        <input type="button" class="btn btnPrimary" value="Log in with email" (click)="authService.SignIn(userName.value, userPassword.value)">
+      </div>
+
+      <div class="forgotPassword">
+        <span routerLink="/forgot-password">Forgot your password?</span>
+      </div>
+
+      <div class="formGroup">
+        <span class="or"><span class="orInner">Or</span></span>
+      </div>
+
+      <!-- Calling GoogleAuth Api from AuthService -->
+      <div class="formGroup">
+        <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
+          <i class="fab fa-google-plus-g"></i>
+          Log in with Google
+        </button>
+      </div>
+      <div class="formGroup">
+        <button type="button" class="btn facebookBtn" (click)="authService.FacebookAuth()">
+          <i class="fab fa-google-plus-g"></i>
+          Log in with Facebook
+        </button>
+      </div>
+
+      <div class="formGroup">
+        <span class="or"><span class="orInner"></span></span>
+      </div>
+
+      <div class="redirectToLogin">
+        <span>Don't have an account? <span class="redirect" routerLink="/register-user">Sign Up</span></span>
+      </div>
+
+    </div>    
+
+  </div>
+</div>

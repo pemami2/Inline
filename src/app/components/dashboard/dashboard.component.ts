@@ -17,7 +17,7 @@ interface Owner {
   tables: number;
   message: string;
   photoURL: string;
-  tablearray: {name: string, phone: number, size:number, time:number }[];
+  tablearray: any[]//[{name: string, phone: number, size:number, time:number }];
 }
 
 @Component({
@@ -56,33 +56,32 @@ ngOnInit() {
     //var element = document.getElementById()
     //console.log(element)
     //this.showData()
-  this.ShowDoc()
+  console.log(this.ShowDoc())
 
     
 
   }
 
-  ShowDoc() {
+  
+
+  async ShowDoc() {
     var myUID = this.authService.userData.uid
     var path = 'users/' + myUID
     this.ownerDoc = this.afs.doc(path)
     this.owner = this.ownerDoc.valueChanges()
-    this.owner.subscribe(x => {
-      //console.log(x)
-      //console.log(x.uid)
-      //console.log(x.tables)
-      //console.log(x.message)
-      //console.log(x.tablearray)
-      //for (var i= 0; i<x.tablearray.length; i++){
-      //  this.myList.push(x.tablearray[i])
-    //  }
-      //console.log(x.tablearray[0].time)
-      
-    })
+    var remotearray = this.ownerDoc.get()
+     
+    console.log ("remotearray: ", remotearray)
+    /*this.owner.subscribe(x => {
+
+      for (var i= 0; i<x.tablearray.length; i++){
+        this.myList.push(x.tablearray[i])
+      } 
+    })*/
 
   
-    
-
+    console.log("mylist after ngoninit: " , this.myList)
+    return "done with ngoninit!"
   }
 
   /*showData(){
@@ -107,7 +106,7 @@ clear(){
 }
 
 removeparty(id_num,uid){
-  this.myList=[];
+  /*this.myList=[];
   var myUID = this.authService.userData.uid
   var path = 'users/' + myUID
   this.ownerDoc = this.afs.doc(path)
@@ -121,9 +120,9 @@ removeparty(id_num,uid){
       
    }
    console.log(this.myList)
-   this.deleteParty(id_num,uid)
-})
-
+   
+})*/
+this.deleteParty(id_num,uid)
 }
 
 deleteParty(id_num,uid) {
@@ -132,14 +131,14 @@ deleteParty(id_num,uid) {
   for (var i = 0; i <this.myList.length; i++){
     if (this.myList[i].time == id_num){
       this.myList.splice(i,1);
-      this.authService.SetArrayDetails(uid,this.myList);
-
+      //this.authService.SetArrayDetails(uid,this.myList);
+      this.ownerDoc.update({tablearray: this.myList})
     }
   }
 }
 
   editParty(id_num, id) {
-    this.myList=[];
+    /*this.myList=[];
     var myUID = this.authService.userData.uid
     var path = 'users/' + myUID
     this.ownerDoc = this.afs.doc(path)
@@ -153,24 +152,24 @@ deleteParty(id_num,uid) {
         
      }
      console.log(this.myList)
-
-    for (var i = 0; i <x.tablearray.length; i++){
+*/
+    for (var i = 0; i <this.myList.length; i++){
      
-      if (x.tablearray[i].time == id_num){
-        this.name = x.tablearray[i].name;
-        this.size = x.tablearray[i].size;
-        this.phone = x.tablearray[i].phone;
-       this.time = x.tablearray[i].time;
+      if (this.myList[i].time == id_num){
+        this.name = this.myList[i].name;
+        this.size = this.myList[i].size;
+        this.phone = this.myList[i].phone;
+       this.time = this.myList[i].time;
       }
     }
-  })
+  //})
  
   this.modalService.open('custom-modal-3');
   }
 
 
 addcustomer(uid){
-  this.myList=[];
+ /* this.myList=[];
   var myUID = this.authService.userData.uid
   var path = 'users/' + myUID
   this.ownerDoc = this.afs.doc(path)
@@ -187,7 +186,7 @@ addcustomer(uid){
 
   
 })
-
+*/
 this.modalService.open('custom-modal-2');
 }
 
@@ -211,8 +210,9 @@ this.modalService.open('custom-modal-2');
         this.myList[i].time=this.time;
       }
     }
-    this.authService.SetArrayDetails(uid,this.myList);
-    this.myList=[];
+    this.ownerDoc.update({tablearray: this.myList})
+    //this.authService.SetArrayDetails(uid,this.myList);
+    //this.myList=[];
 
   
   
@@ -242,13 +242,12 @@ getInfo() {
 
 }
 
-
 onSave(uid){
   this.myList.push({name:this.name, size:this.size, phone:this.phone,time:Date.now(),})
-  this.authService.SetArrayDetails(uid,this.myList);
+  this.ownerDoc.update({tablearray: this.myList})
   
 
-  this.myList=[];
+  //this.myList=[];
 
 }
 closeModal(id: string) {
@@ -256,7 +255,7 @@ closeModal(id: string) {
 
 }
 delete(item,uid){
-  this.myList=[];
+  /*this.myList=[];
   var myUID = this.authService.userData.uid
   var path = 'users/' + myUID
   this.ownerDoc = this.afs.doc(path)
@@ -270,13 +269,14 @@ delete(item,uid){
       
    }
    console.log(this.myList)
-})
+})*/
 this.removeItem(item,uid)
 }
 removeItem(item,uid){
   this.myList.splice(item,1);
-  this.authService.SetArrayDetails(uid,this.myList);
-  this.myList=[];
+  this.ownerDoc.update({tablearray: this.myList})
+  //this.authService.SetArrayDetails(uid,this.myList);
+  //this.myList=[];
 }
 
 

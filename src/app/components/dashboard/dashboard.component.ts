@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   //document observable
   ownerDoc: AngularFirestoreDocument<Owner>;
   owner:Observable<Owner>;
-  snapshot: any;
+  ownerData: any;
 
 
   customerID: string;
@@ -50,8 +50,22 @@ ngOnInit() {
   this.ownerDoc = this.afs.doc(path)
   this.owner = this.ownerDoc.valueChanges()
   this.owner.subscribe(x => {
+    
+    if (x) {
+      this.ownerData = x;
+      localStorage.setItem('owner', JSON.stringify(this.ownerData));
+      JSON.parse(localStorage.getItem('owner'));
+    }
+    else {
+      localStorage.setItem('owner', null);
+      JSON.parse(localStorage.getItem('owner'));
+    }
+    console.log("ownerData: ", this.ownerData.tablearray)
+    console.log("done")
     this.myList = x.tablearray
+    
   })
+
 
 }
 

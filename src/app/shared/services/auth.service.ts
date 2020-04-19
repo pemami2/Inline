@@ -4,11 +4,12 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 import { FirebaseFirestore } from '@angular/fire';
 import { AstTransformer } from '@angular/compiler/src/output/output_ast';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ import { AstTransformer } from '@angular/compiler/src/output/output_ast';
 export class AuthService {
   userData: any; // Save logged in user data
   public customclaims$: Observable<any>;
+  public user$: Observable<any>;
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -24,9 +26,16 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
   ) {
+    this.user$ = this.afAuth.authState.pipe(switchMap(user => {
+      if (user) {
+        return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+      } else {
+        return of(null)
+      }
+    }))
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
-    this.afAuth.authState.subscribe(user => {
+    this.user$.subscribe(user => {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
@@ -36,6 +45,7 @@ export class AuthService {
         JSON.parse(localStorage.getItem('user'));
       }
     });
+
     this.customclaims$ = this.afAuth.idTokenResult.pipe(filter(m =>  m && !!m.claims), map((t) => t.claims));
   }
 
@@ -148,7 +158,7 @@ export class AuthService {
 
   SetUserDetails(uid, PIN, tables, message) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
-    const Details = {
+    const userData: User = {
       uid: uid,
       PIN: PIN,
       tables: tables,
@@ -156,7 +166,7 @@ export class AuthService {
       
 
     };
-    return userRef.set(Details, {
+    return userRef.set(userData, {
       merge: true
     });
   }
@@ -165,11 +175,12 @@ export class AuthService {
 
   SetArrayDetails(uid, tablearray) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
-    const Details = {
+    const userData: User = {
+      uid: uid,
      tablearray: tablearray
 
     };
-    return userRef.set(Details, {
+    return userRef.set(userData, {
       merge: true
     });
   }

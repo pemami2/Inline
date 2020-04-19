@@ -151,7 +151,7 @@
                         </tr>
                      </thead>
                      <tbody>
-                      <tr mdbTableCol *ngFor="let list of ( owner | async )?.tablearray">
+                      <tr mdbTableCol *ngFor="let list of authService.userData.tablearray">
                         <style>
                           #session {
                               display:none;

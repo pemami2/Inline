@@ -51,9 +51,6 @@
               <div class="media-body">
                 <h1>Hello: <strong>{{(user.displayName) ? user.displayName : ((user.phoneNumber) ? user.phoneNumber : 'User')}}</strong></h1>
                 <p *ngIf="(authService.customclaims$ | async)?.techSupport">Role:<strong>Tech support</strong></p>
-                <div *ngFor="let Owner of Owners | async">
-                  <h3>{{Owner.tablearray[0].name}}</h3>
-                </div>
                 <jw-modal id="custom-modal-2">
                   <h1 >Add Customer</h1>
                   <p>Customer Name:<input type="text" [(ngModel)]="name" /></p>
@@ -99,8 +96,11 @@
                     <p *ngIf="user.email">Email: <strong>{{user.email}}</strong></p>
                     <p *ngIf="user.email">Email Verified: <strong>{{user.emailVerified}}</strong></p>
                     <p *ngIf="user.phoneNumber">Phone: <strong>{{user.phoneNumber}}</strong></p>
+                    <p *ngIf="user.tables">Tables: <strong>{{user.tables}}</strong></p>
+                    <p *ngIf="user.PIN">PIN: <strong>{{user.PIN}}</strong></p>
+                    <p *ngIf="user.message">Message: <strong>{{user.message}}</strong></p>
                     <button (click)="authService.SignOut()">Logout {{user.email}} </button>
-                    <button (click)="closeModal('Profile'); openModal('editProfile')">Edit Details</button>
+                    <button (click)="closeModal('Profile'); editProfileInfo();">Edit Details</button>
 
                   </div>
                 </div>

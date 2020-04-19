@@ -34,6 +34,9 @@ export class DashboardComponent implements OnInit {
   size: number;
   phone: number;
   time: number;
+  PIN: number;
+  tables: number;
+  message: string;
   //myList = [];
 
 
@@ -48,7 +51,7 @@ export class DashboardComponent implements OnInit {
 }
 ngOnInit() {
 //myList = this.authService.userData.tablearray
-
+console.log("message: ",this.authService.userData.message)
 
 }
 
@@ -88,6 +91,12 @@ removeparty(id_num,uid){
   this.modalService.open('custom-modal-3');
   }
 
+  editProfileInfo() {
+    this.tables = this.authService.userData.tables
+    this.PIN = this.authService.userData.PIN
+    this.message = this.authService.userData.message
+    this.modalService.open('editProfile')
+  }
 
 addcustomer(uid){
 this.modalService.open('custom-modal-2');

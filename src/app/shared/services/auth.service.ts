@@ -19,6 +19,7 @@ export class AuthService {
   userData: any; // Save logged in user data
   public customclaims$: Observable<any>;
   public user$: Observable<any>;
+  userDoc: AngularFirestoreDocument<User>;
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -26,6 +27,7 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
   ) {
+
     this.user$ = this.afAuth.authState.pipe(switchMap(user => {
       if (user) {
         return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
@@ -33,8 +35,8 @@ export class AuthService {
         return of(null)
       }
     }))
-    /* Saving user data in localstorage when
-    logged in and setting up null when logged out */
+     //Saving user data in localstorage when
+    // logged in and setting up null when logged out 
     this.user$.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -109,6 +111,7 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
+    console.log("isloggedin: ", user)
     if (user !== null && user.phoneNumber !== null) { return true; }
     return (user !== null ) ? true : false;
   }
@@ -120,6 +123,7 @@ export class AuthService {
 
   // Sign in with Google
   GoogleAuth() {
+    console.log("google auth: ", this.userData)
     return this.AuthLogin(new auth.GoogleAuthProvider());
   }
   FacebookAuth() {
@@ -130,7 +134,9 @@ export class AuthService {
   AuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
     .then((result) => {
+      console.log("entered .then in authlogin")
        this.ngZone.run(() => {
+          console.log("entered .run in authlogin")
           this.router.navigate(['dashboard']);
         });
       this.SetUserData(result.user);
@@ -158,7 +164,7 @@ export class AuthService {
 
   SetUserDetails(uid, PIN, tables, message) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
-    const userData: User = {
+    const Details = {
       uid: uid,
       PIN: PIN,
       tables: tables,
@@ -166,7 +172,7 @@ export class AuthService {
       
 
     };
-    return userRef.set(userData, {
+    return userRef.set(Details, {
       merge: true
     });
   }
@@ -175,12 +181,11 @@ export class AuthService {
 
   SetArrayDetails(uid, tablearray) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
-    const userData: User = {
-      uid: uid,
+    const Details = {
      tablearray: tablearray
 
     };
-    return userRef.set(userData, {
+    return userRef.set(Details, {
       merge: true
     });
   }

@@ -5,7 +5,7 @@ import { ModalService } from 'src/app/_modal';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 //import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
-import { timingSafeEqual } from 'crypto';
+
 
 interface Owner {
   uid: string;
@@ -24,7 +24,7 @@ interface Owner {
 export class DashboardComponent implements OnInit {
 
   //document observable
-  ownerDoc: AngularFirestoreDocument<Owner>;
+  
   owner:Observable<Owner>;
   ownerData: any;
 
@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit {
 ngOnInit() {
 //myList = this.authService.userData.tablearray
 console.log("message: ",this.authService.userData.message)
+console.log("localstorage in dashboard", this.authService.userData)
 
 }
 

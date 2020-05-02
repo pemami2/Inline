@@ -123,7 +123,7 @@ onSave(uid){
   myList = this.authService.userData.tablearray
   }
 
-  myList.push({name:this.name, size:this.size, phone:this.phone,time:Date.now(),})
+  myList.push({name:this.name, size:this.size, phone:this.phone,time:Date.now()})
   this.authService.SetArrayDetails(uid,myList);
 }
 

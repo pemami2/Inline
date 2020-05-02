@@ -20,6 +20,8 @@ export class AuthService {
   public customclaims$: Observable<any>;
   public user$: Observable<any>;
   userDoc: AngularFirestoreDocument<User>;
+  public myTime: number;
+  public partyTime: number;
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -49,7 +51,14 @@ export class AuthService {
     });
 
     this.customclaims$ = this.afAuth.idTokenResult.pipe(filter(m =>  m && !!m.claims), map((t) => t.claims));
-  }
+
+      this.myTime = Date.now();
+      
+      setInterval(() => {
+        this.myTime = Date.now();  
+      },60000);
+
+    }
 
   // Sign in with email/password
   SignIn(email, password) {

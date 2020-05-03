@@ -18,7 +18,7 @@
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link active">
-              <i class="fas fa-user"></i>Dashboard
+              <i class="fas fa-home"></i>Dashboard
             </a>
           </li>
           <li class="nav-item">
@@ -54,8 +54,11 @@
                 <jw-modal id="custom-modal-2">
                   <h1 >Add Customer</h1>
                   <p>Customer Name:<input type="text" [(ngModel)]="name" /></p>
-                  <p>Party Size:<input type="text" [(ngModel)]="size" /></p>
-                  <p>Phone Number:<input type="text" [(ngModel)]="phone" /></p>
+                  <p>Party Size:<input type="number" [(ngModel)]="size" /></p>
+                  <p>Phone Number:<input type="text" [(ngModel)]="phone"  minlength="10" maxlength="10" required /></p>
+
+                    <!--<div class="alert alert-danger" *ngIf="phone.errors.minlength">Phone number must be 10 digits</div>
+                    <div class="alert alert-danger" *ngIf="phone.errors.maxlength">Phone number must be 10 digits</div>-->
                   <style>
                     #session {
                         display:none;
@@ -63,22 +66,22 @@
                 </style>
                   <p id="session">{{user.uid}}</p>
 
-                  <button (click)="closeModal('custom-modal-2');onSave(user.uid);clear();">Save</button>
-                  <button (click)="closeModal('custom-modal-2');clear();">Close without saving changes</button>
+                  <button (click)="onSave(user.uid);clear();">Save</button>
+                  <button class="fas fa-times" (click)="closeModal('custom-modal-2');clear();"></button>
                 </jw-modal>
                 <jw-modal id="custom-modal-3">
                   <h1 >Edit Customer</h1>
                   <p>Customer Name:<input type="text" [(ngModel)]="name" /></p>
                   <p>Party Size:<input type="text" [(ngModel)]="size" /></p>
                   <p>Phone Number:<input type="text" [(ngModel)]="phone" /></p>
-                  <style>
-                    #session {
-                        display:none;
-                    }   
-                </style>
+                    <style>
+                      #session {
+                          display:none;
+                      }   
+                    </style>
                   <p id="session">{{user.uid}}</p>
-                  <button (click)="closeModal('custom-modal-3');editPartySave(time, user.uid);clear();">Save</button>
-                  <button (click)="closeModal('custom-modal-3');clear();">Close without saving changes</button>
+                  <button (click)="closeModal('custom-modal-3');editPartySave(time, user.uid);">Save</button>
+                  <button class="fas fa-times" (click)="closeModal('custom-modal-3');clear();"></button>
                 </jw-modal>
                 <jw-modal id="Profile">
                   <div class="pt-3 pb-2 mb-3 border-bottom">
@@ -100,7 +103,7 @@
                     <p *ngIf="user.PIN">PIN: <strong>{{user.PIN}}</strong></p>
                     <p *ngIf="user.message">Message: <strong>{{user.message}}</strong></p>
                     <button (click)="authService.SignOut()">Logout {{user.email}} </button>
-                    <button (click)="closeModal('Profile'); editProfileInfo();">Edit Details</button>
+                    <button class="fas fa-edit" (click)="closeModal('Profile'); editProfileInfo();"></button>
 
                   </div>
                 </div>
@@ -129,7 +132,7 @@
                   <p>Tables: <input type="text" [(ngModel)]="tables" #userTables /></p>
                   <p>Message: <textarea cols="30" rows="10" [(ngModel)]="message" #userMessage > </textarea></p>
                   <button (click)="closeModal('editProfile');authService.SetUserDetails(user.uid, userPIN.value, userTables.value, userMessage.value)">Save</button>
-                  <button (click)="closeModal('editProfile');clear();">Close without saving changes</button>
+                  <button class="fas fa-times" (click)="closeModal('editProfile');clear();"></button>
                   </div>
                 </div>
               </div>
@@ -148,7 +151,7 @@
                           <th scope="col">Phone Number</th>
                           <th scope="col">Waiting Time</th>
                           <th scope="col">    </th>
-                          <th scope="col">   </th>
+                          <th scope="col"><button class="fas fa-plus-square" style="color: white;" (click)="addcustomer();clear();"></button></th>
 
                         </tr>
                      </thead>
@@ -164,13 +167,13 @@
                         <td>{{list.size}}</td>
                         <td>{{list.phone}}</td>
                         <td>{{((((authService.myTime - list.time) / 1000) / 60)/ 60).toFixed(0)  }} hrs. {{((((authService.myTime - list.time) / 1000) / 60 )% 60).toFixed(0) }} min. </td>
-                        <td><button (click)="editParty(list.time, custom-modal-3)">Edit</button></td>
+                        <td><button class="fas fa-edit" (click)="editParty(list.time, custom-modal-3)"></button></td>
 
-                        <td><button (click)="removeparty(list.time, user.uid)">x</button></td>
+                        <td><button class="fas fa-trash-alt" (click)="removeparty(list.time, user.uid)"></button></td>
                     </tr>
                   </tbody>
                </table>
-               <button (click)="addcustomer();clear();">Add Customer</button>
+               
 
               </div>
             </div>

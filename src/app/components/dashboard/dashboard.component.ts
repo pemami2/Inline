@@ -118,13 +118,26 @@ editPartySave(id_num,uid) {
 }
 
 onSave(uid){
-  var myList = []
-  if (this.authService.userData.tablearray !== undefined) {
-  myList = this.authService.userData.tablearray
-  }
+  var numbers = /^[0-9]+$/;
+   if (this.name.match(numbers)) {
+    alert("Your name must contain letters")
+  } else if ( typeof this.size !== 'number') {
+    alert("Party size must be an number")
 
-  myList.push({name:this.name, size:this.size, phone:this.phone,time:Date.now()})
-  this.authService.SetArrayDetails(uid,myList);
+  }else if (this.phone.toString().length != 10 ){ 
+    alert("Your phone number must be 10 digits")
+  }
+    else{
+    var myList = []
+    if (this.authService.userData.tablearray !== undefined) {
+      myList = this.authService.userData.tablearray
+    }
+
+    myList.push({name:this.name, size:this.size, phone:this.phone, time:Date.now()})
+    this.authService.SetArrayDetails(uid,myList);
+    //this.clear()
+    this.closeModal('custom-modal-2')
+  }
 }
 
 closeModal(id: string) {

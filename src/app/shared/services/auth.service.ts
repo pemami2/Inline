@@ -120,8 +120,6 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log("isloggedin localstorage: ", user)
-    console.log("isloggedin userData: ", this.userData)
     if (user !== null && user.phoneNumber !== null) { return true; }
     return (user !== null ) ? true : false;
   }
@@ -133,8 +131,7 @@ export class AuthService {
 
   // Sign in with Google
   GoogleAuth() {
-    console.log("google auth userData: ", this.userData)
-    console.log("googleAuth localstorage: ", JSON.parse(localStorage.getItem('user')))
+
     return this.AuthLogin(new auth.GoogleAuthProvider());
   }
   FacebookAuth() {
@@ -145,9 +142,8 @@ export class AuthService {
   async AuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
     .then((result) => {
-      console.log("entered .then in authlogin, result:", result)
+
        this.ngZone.run(() => {
-          console.log("entered .run in authlogin")
           setTimeout(() => {this.router.navigate(['dashboard']);}, 300);
         });
       this.SetUserData(result.user);

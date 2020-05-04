@@ -94,7 +94,6 @@ export class SignInComponent implements OnInit {
                     //console.log(`verification success ${result.user}`);
                     this.user = result.user;
     }).then(res => {
-      //console.log('try to navigate');
       this.ngZone.run(() => {
         this.router.navigate(['dashboard']);
       })    

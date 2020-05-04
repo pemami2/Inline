@@ -51,8 +51,7 @@ export class DashboardComponent implements OnInit {
 }
 ngOnInit() {
 //myList = this.authService.userData.tablearray
-console.log("message: ",this.authService.userData.message)
-console.log("localstorage in dashboard", this.authService.userData)
+
 
 }
 
@@ -130,7 +129,7 @@ editPartySave(id_num,uid) {
 }
 
 onSave(uid){
-  console.log("phone: (",this.phone,")")
+
   var numbers = /^[0-9]+$/;
    if (this.name.match(numbers)) {
     alert("Your name must contain letters")

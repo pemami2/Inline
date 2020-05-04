@@ -78,56 +78,68 @@ removeparty(id_num,uid){
   }
 }
 
-  editParty(id_num, id) {
-    var myList = this.authService.userData.tablearray
+editParty(id_num, id) {
+  var myList = this.authService.userData.tablearray
 
-    for (var i = 0; i <myList.length; i++){
-      if (myList[i].time == id_num){
-        this.name =myList[i].name;
-        this.size = myList[i].size;
-        this.phone = myList[i].phone;
-       this.time = myList[i].time;
-      }
+  for (var i = 0; i <myList.length; i++){
+    if (myList[i].time == id_num){
+      this.name =myList[i].name;
+      this.size = myList[i].size;
+      this.phone = myList[i].phone;
+      this.time = myList[i].time;
     }
+  }
   this.modalService.open('custom-modal-3');
-  }
+}
 
-  editProfileInfo() {
-    this.tables = this.authService.userData.tables
-    this.PIN = this.authService.userData.PIN
-    this.message = this.authService.userData.message
-    this.modalService.open('editProfile')
-  }
+editProfileInfo() {
+  this.tables = this.authService.userData.tables
+  this.PIN = this.authService.userData.PIN
+  this.message = this.authService.userData.message
+  this.modalService.open('editProfile')
+}
 
 addcustomer(uid){
 this.modalService.open('custom-modal-2');
 }
 
 editPartySave(id_num,uid) {
-  var myList = this.authService.userData.tablearray
+  var numbers = /^[0-9]+$/;
+  if (this.name.match(numbers)) {
+   alert("Your name must contain letters")
+ } else if ( typeof this.size !== 'number') {
+   alert("Party size must be an number")
 
-  for (var i = 0; i <myList.length; i++){ 
-    if (myList[i].time == id_num){
-        myList[i].name= this.name ;
-        myList[i].size=this.size;
-        myList[i].phone=this.phone;
-        myList[i].time=this.time;
+ }else if (this.phone === null ||this.phone.toString().length == 10){ 
+   
+   var myList = this.authService.userData.tablearray
+
+    for (var i = 0; i <myList.length; i++){ 
+      if (myList[i].time == id_num){
+          myList[i].name= this.name ;
+          myList[i].size=this.size;
+          myList[i].phone=this.phone;
+          myList[i].time=this.time;
+        }
       }
-    }
-    this.authService.SetArrayDetails(uid,myList);
+      this.authService.SetArrayDetails(uid,myList);
+      this.closeModal('custom-modal-3');
+ }else{
+  alert("Your phone number must be 10 digits")
+  }
 }
 
 onSave(uid){
+  console.log("phone: (",this.phone,")")
   var numbers = /^[0-9]+$/;
    if (this.name.match(numbers)) {
     alert("Your name must contain letters")
+
   } else if ( typeof this.size !== 'number') {
     alert("Party size must be an number")
 
-  }else if (this.phone.toString().length != 10 ){ 
-    alert("Your phone number must be 10 digits")
-  }
-    else{
+  }else if (this.phone === null ||this.phone.toString().length == 10   ){ 
+    
     var myList = []
     if (this.authService.userData.tablearray !== undefined) {
       myList = this.authService.userData.tablearray
@@ -135,9 +147,14 @@ onSave(uid){
 
     myList.push({name:this.name, size:this.size, phone:this.phone, time:Date.now()})
     this.authService.SetArrayDetails(uid,myList);
-    //this.clear()
+    this.clear()
     this.closeModal('custom-modal-2')
   }
+    else{
+      alert("Your phone number must be 10 digits")
+   
+  }
+  
 }
 
 closeModal(id: string) {

@@ -115,10 +115,10 @@ var myWindow = window.open(myURL, "", "width=500, height=500")*/
 */
 var myURL = 'http://35.247.121.174:3000/?message=' + myName + myString.toString() + '&number=1' + phoneNum.toString() + '&subject=testsubject'
 console.log(myURL)
-var popup = window.open(myURL)
+var popup = window.open(myURL, "", "width=200, height=200")
 popup.blur()
 window.focus();
-//setTimeout(() => {window.close();}, 3000);
+setTimeout(() => {popup.close();}, 3000);
 //document.getElementById("messagebutton").style.color = "grey"
 var myList = this.authService.userData.tablearray
 

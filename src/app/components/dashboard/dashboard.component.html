@@ -147,17 +147,19 @@
                     <thead class="thead-dark">
                         <tr>
                           <th scope="col">Name</th>
-                          <th scope="col">Party Size</th>
+                          <th scope="col">Size</th>
                           <th scope="col">Phone Number</th>
                           <th scope="col">Waiting Time</th>
-                          <th scope="col">Add Party<button class="fas fa-plus-square" style="color: rgb(110, 247, 144);" (click)="addcustomer();clear();"></button></th>
                           <th scope="col"> </th>
+                          <th scope="col"> </th>
+                          <th scope="col">Add<button class="fas fa-plus-square" style="color: rgb(110, 247, 144);" (click)="addcustomer();clear();"></button></th>
 
                         </tr>
                      </thead>
                      <tbody>
                       <tr mdbTableCol *ngFor="let list of authService.userData.tablearray">
                         <style>
+                          
                           #session {
                               display:none;
                           }   
@@ -168,8 +170,9 @@
                         <td>{{list.phone}}</td>
                         <td>{{((((authService.myTime - list.time) / 1000) / 60)/ 60).toFixed(0)  }} hrs. {{((((authService.myTime - list.time) / 1000) / 60 )% 60).toFixed(0) }} min. </td>
                         <td><button style="color: darkgoldenrod;" class="fas fa-edit" (click)="editParty(list.time, custom-modal-3)"></button></td>
-
+                        <td><button id = "messagebutton" class="fas fa-comment-dots" style=color:green; onclick="this.style.color='grey'" (click)="sendSMS(list.phone, user.uid, list.name);"></button></td>
                         <td><button style="color: rgb(194, 0, 0);" class="fas fa-trash-alt" (click)="removeparty(list.time, user.uid)"></button></td>
+                        <td *ngIf = "list.contacted;"><i class="far fa-check-square"></i></td>
                     </tr>
                   </tbody>
                </table>

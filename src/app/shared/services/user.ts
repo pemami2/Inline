@@ -7,6 +7,6 @@ export interface User {
    PIN?: number;
    tables?: number;
    message?: number;
-   tablearray?:{name: string, phone: number, size:number, time:number }[];
+   tablearray?:{name: string, phone: number, size:number, time:number, contacted: boolean }[];
 }
 

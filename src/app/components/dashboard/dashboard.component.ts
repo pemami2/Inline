@@ -5,6 +5,8 @@ import { ModalService } from 'src/app/_modal';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 //import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
+import { stringify } from 'querystring';
+
 
 
 interface Owner {
@@ -37,6 +39,7 @@ export class DashboardComponent implements OnInit {
   PIN: number;
   tables: number;
   message: string;
+  contacted: boolean;
   //myList = [];
 
 
@@ -89,6 +92,44 @@ editParty(id_num, id) {
     }
   }
   this.modalService.open('custom-modal-3');
+}
+
+async sendSMS(phoneNum,uid, name){
+  console.log("normal message in sendSMS: ", this.authService.userData.message)
+  console.log("number" ,phoneNum)
+  var myName = "Hi " + name +", "
+  var myMessage = this.authService.userData.message
+  var myString = myMessage.replace(/\s/g,"%20")
+  console.log(myString, phoneNum)
+  /*
+var myURL = "https://l.messenger.com/l.php?u=http%3A%2F%2F34.83.12.149%3A3000%2F%3Fmessage%3D" + myString.toString() + "%26number%3D1" + phoneNum.toString() + "%26subject%3Dtestsubject&h=AT1SxNwPYMapsR0C4DoKSKqDxY_ePFmpnMPIXQ462QN5SxVxU73_FD-oX-hqvR2Am5eqpueP5MYRAug3KYdHW_Jos8PEfFGFK2sMumXCpnY-ve6vehpXAcQo_bkATvIeIsFfJQ"
+console.log("message with no spaces: " , myURL) 
+var myWindow = window.open(myURL, "", "width=500, height=500")*/
+ //myWindow.document.write("<p> Your message has been sent!</p>")
+ /*await fetch('https://l.messenger.com/l.php?u=http%3A%2F%2F34.83.12.149%3A3000%2F%3Fmessage%3DLike%2520a%2520wang%2520bang%2520wang%26number%3D19495376842%26subject%3Dtestsubject&h=AT1SxNwPYMapsR0C4DoKSKqDxY_ePFmpnMPIXQ462QN5SxVxU73_FD-oX-hqvR2Am5eqpueP5MYRAug3KYdHW_Jos8PEfFGFK2sMumXCpnY-ve6vehpXAcQo_bkATvIeIsFfJQ')
+.then(response => {
+  return response.text();
+}).then(data => {
+  console.log("message", data)
+})
+*/
+var myURL = 'http://35.247.121.174:3000/?message=' + myName + myString.toString() + '&number=1' + phoneNum.toString() + '&subject=testsubject'
+console.log(myURL)
+var popup = window.open(myURL)
+popup.blur()
+window.focus();
+//setTimeout(() => {window.close();}, 3000);
+//document.getElementById("messagebutton").style.color = "grey"
+var myList = this.authService.userData.tablearray
+
+for (var i = 0; i <myList.length; i++){ 
+  if (myList[i].phone == phoneNum){
+      myList[i].contacted= true ;
+    }
+  }
+  this.authService.SetArrayDetails(uid,myList);
+
+
 }
 
 editProfileInfo() {
@@ -144,7 +185,7 @@ onSave(uid){
       myList = this.authService.userData.tablearray
     }
 
-    myList.push({name:this.name, size:this.size, phone:this.phone, time:Date.now()})
+    myList.push({name:this.name, size:this.size, phone:this.phone, time:Date.now(), contacted: false})
     this.authService.SetArrayDetails(uid,myList);
     this.clear()
     this.closeModal('custom-modal-2')

@@ -6,9 +6,6 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
-import { FirebaseFirestore } from '@angular/fire';
-import { AstTransformer } from '@angular/compiler/src/output/output_ast';
 
 
 @Injectable({
@@ -19,9 +16,8 @@ export class AuthService {
   userData: any; // Save logged in user data
   public customclaims$: Observable<any>;
   public user$: Observable<any>;
-  userDoc: AngularFirestoreDocument<User>;
   public myTime: number;
-  public partyTime: number;
+
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service

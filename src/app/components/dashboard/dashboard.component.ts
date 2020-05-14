@@ -3,9 +3,8 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ModalService } from 'src/app/_modal';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-//import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
-import { stringify } from 'querystring';
+
 
 
 
@@ -40,7 +39,7 @@ export class DashboardComponent implements OnInit {
   tables: number;
   message: string;
   contacted: boolean;
-  //myList = [];
+
 
 
   constructor(
@@ -53,9 +52,6 @@ export class DashboardComponent implements OnInit {
     
 }
 ngOnInit() {
-//myList = this.authService.userData.tablearray
-
-
 }
 
 openModal(id: string) {
@@ -99,20 +95,10 @@ async sendSMS(phoneNum,uid, name){
   console.log("number" ,phoneNum)
   var myName = "Hi " + name +", "
   var myMessage = this.authService.userData.message
+  console.log(myMessage)
   var myString = myMessage.replace(/\s/g,"%20")
   console.log(myString, phoneNum)
-  /*
-var myURL = "https://l.messenger.com/l.php?u=http%3A%2F%2F34.83.12.149%3A3000%2F%3Fmessage%3D" + myString.toString() + "%26number%3D1" + phoneNum.toString() + "%26subject%3Dtestsubject&h=AT1SxNwPYMapsR0C4DoKSKqDxY_ePFmpnMPIXQ462QN5SxVxU73_FD-oX-hqvR2Am5eqpueP5MYRAug3KYdHW_Jos8PEfFGFK2sMumXCpnY-ve6vehpXAcQo_bkATvIeIsFfJQ"
-console.log("message with no spaces: " , myURL) 
-var myWindow = window.open(myURL, "", "width=500, height=500")*/
- //myWindow.document.write("<p> Your message has been sent!</p>")
- /*await fetch('https://l.messenger.com/l.php?u=http%3A%2F%2F34.83.12.149%3A3000%2F%3Fmessage%3DLike%2520a%2520wang%2520bang%2520wang%26number%3D19495376842%26subject%3Dtestsubject&h=AT1SxNwPYMapsR0C4DoKSKqDxY_ePFmpnMPIXQ462QN5SxVxU73_FD-oX-hqvR2Am5eqpueP5MYRAug3KYdHW_Jos8PEfFGFK2sMumXCpnY-ve6vehpXAcQo_bkATvIeIsFfJQ')
-.then(response => {
-  return response.text();
-}).then(data => {
-  console.log("message", data)
-})
-*/
+
 var myURL = 'http://35.247.121.174:3000/?message=' + myName + myString.toString() + '&number=1' + phoneNum.toString() + '&subject=testsubject'
 console.log(myURL)
 var popup = window.open(myURL, "", "width=200, height=200")
@@ -206,11 +192,5 @@ delete(item,uid){
   
   myList.splice(item,1);
   this.authService.SetArrayDetails(uid,myList);
-}
-
-editDetails() {
-  this.ngZone.run(() => {
-    this.router.navigate(['user-details']);
-  }) 
 }
 }

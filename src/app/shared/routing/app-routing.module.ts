@@ -1,3 +1,4 @@
+import { HomeComponent } from '../../components/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -14,7 +15,8 @@ import { SecureInnerPagesGuard } from "../../shared/guard/secure-inner-pages.gua
 
 // Include route guard in routes array
 const routes: Routes = [
-  { path: '', redirectTo: '/sign-in', pathMatch: 'full'},
+  //{ path: '', redirectTo: '/sign-in', pathMatch: 'full'},
+  { path: '', component: HomeComponent, canActivate:[SecureInnerPagesGuard]},
   { path: 'sign-in', component: SignInComponent, canActivate: [SecureInnerPagesGuard]},
   { path: 'register-user', component: SignUpComponent, canActivate: [SecureInnerPagesGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },

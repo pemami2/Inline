@@ -1,8 +1,13 @@
 <!-- Top navigation -->
-<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+<nav class="navbar navbar-dark fixed-top bg-orange flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" routerLink="/register-student">
-    <img class="brand-logo" src="../../../assets/InLine logo-transparent.png" height="25" alt="Logo">
-    
+    <img
+      class="brand-logo"
+      src="../../../assets/InLine logo-transparent.png"
+      height="25"
+      alt="Logo"
+    />
+
     <span class="dasboard-text">Dashboard</span>
   </a>
 </nav>
@@ -10,7 +15,6 @@
 <!-- Sidebar navigation -->
 <div class="container-fluid">
   <div class="row">
-
     <nav class="col-md-2 d-md-block bg-light sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
@@ -20,7 +24,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"(click)="openModal('Profile')">
+            <a class="nav-link" (click)="openModal('Profile')">
               <i class="fas fa-user"></i>Profile
             </a>
           </li>
@@ -37,153 +41,349 @@
     <!-- Main content -->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="inner-adjust">
-
-        <div class="pt-3 pb-2 mb-3 border-bottom">
-        </div>
+        <div class="pt-3 pb-2 mb-3 border-bottom"></div>
         <!-- Show user data when logged in -->
         <div class="row" *ngIf="authService.userData as user">
           <div class="col-md-12">
             <div class="media">
-              <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
-                alt="{{user.displayName}}">
+              <img
+                class="align-self-start mr-5 img-thumbnail rounded-circle"
+                src="{{
+                  user.photoURL ? user.photoURL : '/assets/dummy-user.png'
+                }}"
+                alt="{{ user.displayName }}"
+              />
               <div class="media-body">
-                <h1>Hello: <strong>{{(user.displayName) ? user.displayName : ((user.phoneNumber) ? user.phoneNumber : 'User')}}</strong></h1>
-                <p *ngIf="(authService.customclaims$ | async)?.techSupport">Role:<strong>Tech support</strong></p>
+                <h1>
+                  Hello:
+                  <strong>{{
+                    user.displayName
+                      ? user.displayName
+                      : user.phoneNumber
+                      ? user.phoneNumber
+                      : "User"
+                  }}</strong>
+                </h1>
+                <p *ngIf="(authService.customclaims$ | async)?.techSupport">
+                  Role:<strong>Tech support</strong>
+                </p>
                 <jw-modal id="custom-modal-2">
-                  <h1 style="padding-top: 10px;">Add Customer <button class="fas fa-times" style="position: absolute; right: 60px; color: red;" (click)="closeModal('custom-modal-2');"></button></h1>
-                  <p>Customer Name:<input type="text" [(ngModel)]="name" required/></p>
-                  <p>Party Size:<input type="number" [(ngModel)]="size" required/></p>
-                  <p>Phone Number:<input type="number" [(ngModel)]="phone" minlength="10" maxlength="10" /></p>
+                  <h1 style="padding-top: 10px;">
+                    Add Customer
+                    <button
+                      class="fas fa-times"
+                      style="position: absolute; right: 60px; color: red;"
+                      (click)="closeModal('custom-modal-2')"
+                    ></button>
+                  </h1>
+                  <p>
+                    Customer Name:<input
+                      type="text"
+                      [(ngModel)]="name"
+                      required
+                    />
+                  </p>
+                  <p>
+                    Party Size:<input
+                      type="number"
+                      [(ngModel)]="size"
+                      required
+                    />
+                  </p>
+                  <p>
+                    Phone Number:<input
+                      type="number"
+                      [(ngModel)]="phone"
+                      minlength="10"
+                      maxlength="10"
+                    />
+                  </p>
 
-                    <!--<div class="alert alert-danger" *ngIf="phone.errors.minlength">Phone number must be 10 digits</div>
+                  <!--<div class="alert alert-danger" *ngIf="phone.errors.minlength">Phone number must be 10 digits</div>
                     <div class="alert alert-danger" *ngIf="phone.errors.maxlength">Phone number must be 10 digits</div>-->
                   <style>
                     #session {
-                        display:none;
-                    }   
-                </style>
-                  <p id="session">{{user.uid}}</p>
+                      display: none;
+                    }
+                  </style>
+                  <p id="session">{{ user.uid }}</p>
 
-                  <button style=" background-color: grey; color: white;" (click)="onSave(user.uid);">Save</button>
-                  
+                  <button
+                    style="background-color: grey; color: white;"
+                    (click)="onSave(user.uid)"
+                  >
+                    Save
+                  </button>
                 </jw-modal>
                 <jw-modal id="custom-modal-3">
-                  <h1 style="padding-top: 10px;" >Edit Customer <button class="fas fa-times" style="position: absolute; right: 60px; color: red;" (click)="closeModal('custom-modal-3');clear();"></button> </h1>
-                  <p>Customer Name:<input type="text" [(ngModel)]="name" required /></p>
-                  <p>Party Size:<input type="number" [(ngModel)]="size" required /></p>
-                  <p>Phone Number:<input type="number" [(ngModel)]="phone" minlength="10" maxlength="10" /></p>
-                    <style>
-                      #session {
-                          display:none;
-                      }   
-                    </style>
-                  <p id="session">{{user.uid}}</p>
-                  <button style=" background-color: grey; color: white;" (click)="editPartySave(time, user.uid);">Save</button>
-                  
+                  <h1 style="padding-top: 10px;">
+                    Edit Customer
+                    <button
+                      class="fas fa-times"
+                      style="position: absolute; right: 60px; color: red;"
+                      (click)="closeModal('custom-modal-3'); clear()"
+                    ></button>
+                  </h1>
+                  <p>
+                    Customer Name:<input
+                      type="text"
+                      [(ngModel)]="name"
+                      required
+                    />
+                  </p>
+                  <p>
+                    Party Size:<input
+                      type="number"
+                      [(ngModel)]="size"
+                      required
+                    />
+                  </p>
+                  <p>
+                    Phone Number:<input
+                      type="number"
+                      [(ngModel)]="phone"
+                      minlength="10"
+                      maxlength="10"
+                    />
+                  </p>
+                  <style>
+                    #session {
+                      display: none;
+                    }
+                  </style>
+                  <p id="session">{{ user.uid }}</p>
+                  <button
+                    style="background-color: grey; color: white;"
+                    (click)="editPartySave(time, user.uid)"
+                  >
+                    Save
+                  </button>
                 </jw-modal>
                 <jw-modal id="Profile">
                   <div class="pt-3 pb-2 mb-3 border-bottom">
-                    <h1 style="padding-top: 10px;" class="h2">User Profile <button class="fas fa-times" style="position: absolute; right: 60px; color: red;" (click)="closeModal('Profile');clear();"></button></h1>
+                    <h1 style="padding-top: 10px;" class="h2">
+                      User Profile
+                      <button
+                        class="fas fa-times"
+                        style="position: absolute; right: 60px; color: red;"
+                        (click)="closeModal('Profile'); clear()"
+                      ></button>
+                    </h1>
                   </div>
                   <div class="row" *ngIf="authService.userData as user">
                     <div class="col-md-12">
                       <div class="media">
-                        <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
-                          alt="{{user.displayName}}">
-                  
-                  <div class="media-body">
-                    <h1>Hello: <strong>{{(user.displayName) ? user.displayName : ((user.phoneNumber) ? user.phoneNumber : 'User')}}</strong></h1>
-                    <p>User ID: <strong>{{user.uid}}</strong></p>
-                    <p *ngIf="user.email">Email: <strong>{{user.email}}</strong></p>
-                    <p *ngIf="user.email">Email Verified: <strong>{{user.emailVerified}}</strong></p>
-                    <p *ngIf="user.phoneNumber">Phone: <strong>{{user.phoneNumber}}</strong></p>
-                    <p *ngIf="user.tables">Tables: <strong>{{user.tables}}</strong></p>
-                    <p *ngIf="user.PIN">PIN: <strong>{{user.PIN}}</strong></p>
-                    <p *ngIf="user.message">Message: <strong>{{user.message}}</strong></p>
-                    <button style="position: absolute; left: 3%; top: 250px; background-color: grey; color: white;" (click)="authService.SignOut()">Logout </button>
-                    <button style="position: absolute; left: 4%; top: 200px; color: darkgoldenrod; font-size: larger;" class="fas fa-edit" (click)="closeModal('Profile'); editProfileInfo();"></button>
+                        <img
+                          class="align-self-start mr-5 img-thumbnail rounded-circle"
+                          src="{{
+                            user.photoURL
+                              ? user.photoURL
+                              : '/assets/dummy-user.png'
+                          }}"
+                          alt="{{ user.displayName }}"
+                        />
 
+                        <div class="media-body">
+                          <h1>
+                            Hello:
+                            <strong>{{
+                              user.displayName
+                                ? user.displayName
+                                : user.phoneNumber
+                                ? user.phoneNumber
+                                : "User"
+                            }}</strong>
+                          </h1>
+                          <p>
+                            User ID: <strong>{{ user.uid }}</strong>
+                          </p>
+                          <p *ngIf="user.email">
+                            Email: <strong>{{ user.email }}</strong>
+                          </p>
+                          <p *ngIf="user.email">
+                            Email Verified:
+                            <strong>{{ user.emailVerified }}</strong>
+                          </p>
+                          <p *ngIf="user.message">
+                            Message: <strong>{{ user.message }}</strong>
+                          </p>
+                        </div>
+                        <button
+                          class="btn btn-default btn-default"
+                          style="color: darkgoldenrod; font-size: larger;"
+                          class="fas fa-edit"
+                          (click)="closeModal('Profile'); editProfileInfo()"
+                        ></button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-
                 </jw-modal>
                 <jw-modal id="editProfile">
                   <div class="pt-3 pb-2 mb-3 border-bottom">
-                    <h1 style="padding-top: 10px;" class="h2">User Profile <button class="fas fa-times" style="position: absolute; right: 60px; color: red;" (click)="closeModal('editProfile');clear();"></button></h1>
+                    <h1 style="padding-top: 10px;" class="h2">
+                      User Profile
+                      <button
+                        class="fas fa-times"
+                        style="position: absolute; right: 60px; color: red;"
+                        (click)="closeModal('editProfile'); clear()"
+                      ></button>
+                    </h1>
                   </div>
                   <div class="row" *ngIf="authService.userData as user">
                     <div class="col-md-12">
                       <div class="media">
-                        <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
-                          alt="{{user.displayName}}">
-                  
-                  <div class="media-body">
-                    <h1>Hello: <strong>{{(user.displayName) ? user.displayName : ((user.phoneNumber) ? user.phoneNumber : 'User')}}</strong></h1>
-                    <p>User ID: <strong>{{user.uid}}</strong></p>
-                    <p *ngIf="user.email">Email: <strong>{{user.email}}</strong></p>
-                    <p *ngIf="user.email">Email Verified: <strong>{{user.emailVerified}}</strong></p>
-                    <p *ngIf="user.phoneNumber">Phone: <strong>{{user.phoneNumber}}</strong></p>
-                    <h1 >Edit Customer</h1>
-                  <p>PIN: <input type="text" [(ngModel)]="PIN" #userPIN /></p>
-                  <p>Tables: <input type="text" [(ngModel)]="tables" #userTables /></p>
-                  <p>Message: </p>
-                  <p><textarea cols="30" rows="10" [(ngModel)]="message" #userMessage > </textarea></p>
-                  <button style="background-color: grey; color: white;" (click)="closeModal('editProfile');authService.SetUserDetails(user.uid, userPIN.value, userTables.value, userMessage.value)">Save</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                        <img
+                          class="align-self-start mr-5 img-thumbnail rounded-circle"
+                          src="{{
+                            user.photoURL
+                              ? user.photoURL
+                              : '/assets/dummy-user.png'
+                          }}"
+                          alt="{{ user.displayName }}"
+                        />
 
+                        <div class="media-body">
+                          <h1>
+                            Hello:
+                            <strong>{{
+                              user.displayName
+                                ? user.displayName
+                                : user.phoneNumber
+                                ? user.phoneNumber
+                                : "User"
+                            }}</strong>
+                          </h1>
+                          <p>
+                            User ID: <strong>{{ user.uid }}</strong>
+                          </p>
+                          <p *ngIf="user.email">
+                            Email: <strong>{{ user.email }}</strong>
+                          </p>
+                          <p *ngIf="user.email">
+                            Email Verified:
+                            <strong>{{ user.emailVerified }}</strong>
+                          </p>
+                          <p *ngIf="user.phoneNumber">
+                            Phone: <strong>{{ user.phoneNumber }}</strong>
+                          </p>
+                          <h1>Customize Message</h1>
+                          <p></p>
+                          <p>Message:</p>
+                          <p>
+                            <textarea
+                              cols="30"
+                              rows="10"
+                              [(ngModel)]="message"
+                              #userMessage
+                            >
+                            </textarea>
+                          </p>
+                          <button
+                            style="background-color: grey; color: white;"
+                            (click)="
+                              closeModal('editProfile');
+                              authService.SetUserDetails(
+                                user.uid,
+                                userMessage.value
+                              )
+                            "
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </jw-modal>
                 <div class="pt-3 pb-2 mb-3 border-bottom">
                   <h1 class="h1">Queue</h1>
                 </div>
-                
-                  <table class="table table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                          <th scope="col">Name</th>
-                          <th scope="col">Size</th>
-                          <th scope="col">Phone Number</th>
-                          <th scope="col">Waiting Time</th>
-                          <th scope="col"> </th>
-                          <th scope="col"> </th>
-                          <th scope="col"> </th>
-                          <th scope="col">Add<button class="fas fa-plus-square" style="color: rgb(110, 247, 144);" (click)="addcustomer();clear();"></button></th>
 
-                        </tr>
-                     </thead>
-                     <tbody>
-                      <tr mdbTableCol *ngFor="let list of authService.userData.tablearray">
-                        <style>
-                          
-                          #session {
-                              display:none;
-                          }   
+                <table class="table table-hover">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Size</th>
+                      <th scope="col">Phone Number</th>
+                      <th scope="col">Waiting Time</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                      <th scope="col">
+                        Add<button
+                          class="fas fa-plus-square"
+                          style="color: rgb(110, 247, 144);"
+                          (click)="addcustomer(); clear()"
+                        ></button>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      mdbTableCol
+                      *ngFor="let list of authService.userData.tablearray"
+                    >
+                      <style>
+                        #session {
+                          display: none;
+                        }
                       </style>
-                        <p id="session">{{user.uid}}</p>
-                        <td>{{list.name}}</td>
-                        <td>{{list.size}}</td>
-                        <td>{{list.phone}}</td>
-                        <td>{{((((authService.myTime - list.time) / 1000) / 60)/ 60).toFixed(0)  }} hrs. {{((((authService.myTime - list.time) / 1000) / 60 )% 60).toFixed(0) }} min. </td>
-                        <td><button style="color: darkgoldenrod;" class="fas fa-edit" (click)="editParty(list.time, custom-modal-3)"></button></td>
-                        <td><button id = "messagebutton" class="fas fa-comment-dots" style=color:green; onclick="this.style.color='grey'" (click)="sendSMS(list.phone, user.uid, list.name);"></button></td>
-                        <td><button style="color: rgb(194, 0, 0);" class="fas fa-trash-alt" (click)="removeparty(list.time, user.uid)"></button></td>
-                        <td *ngIf = "list.contacted;"><i class="far fa-check-square"></i></td>
+                      <p id="session">{{ user.uid }}</p>
+                      <td>{{ list.name }}</td>
+                      <td>{{ list.size }}</td>
+                      <td>{{ list.phone }}</td>
+                      <td>
+                        {{
+                          (
+                            (authService.myTime - list.time) /
+                            1000 /
+                            60 /
+                            60
+                          ).toFixed(0)
+                        }}
+                        hrs.
+                        {{
+                          (
+                            ((authService.myTime - list.time) / 1000 / 60) %
+                            60
+                          ).toFixed(0)
+                        }}
+                        min.
+                      </td>
+                      <td>
+                        <button
+                          style="color: darkgoldenrod;"
+                          class="fas fa-edit"
+                          (click)="editParty(list.time, custom - modal - 3)"
+                        ></button>
+                      </td>
+                      <td>
+                        <button
+                          id="messagebutton"
+                          class="fas fa-comment-dots"
+                          style="color: green;"
+                          onclick="this.style.color='grey'"
+                          (click)="sendSMS(list.phone, user.uid, list.name)"
+                        ></button>
+                      </td>
+                      <td>
+                        <button
+                          style="color: rgb(194, 0, 0);"
+                          class="fas fa-trash-alt"
+                          (click)="removeparty(list.time, user.uid)"
+                        ></button>
+                      </td>
+                      <td *ngIf="list.contacted">
+                        <i class="far fa-check-square"></i>
+                      </td>
                     </tr>
                   </tbody>
-               </table>
-               
-
+                </table>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </main>
-
   </div>
 </div>

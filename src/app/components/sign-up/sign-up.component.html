@@ -1,19 +1,48 @@
 <div class="displayTable">
   <div class="displayTableCell">
-
     <div class="authBlock">
+      <img
+        routerLink="/"
+        src="../../../assets/InLine logo.png"
+        alt="InLine_logo"
+        width="200"
+        height="100"
+        style="
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        "
+      />
       <h3>Sign Up</h3>
 
       <div class="formGroup">
-        <input type="email" class="formControl" placeholder="Email Address" #userEmail required>
+        <input
+          type="email"
+          class="formControl"
+          placeholder="Email Address"
+          #userEmail
+          required
+        />
       </div>
 
       <div class="formGroup">
-        <input type="password" class="formControl" placeholder="Password" #userPwd required>
+        <input
+          type="password"
+          class="formControl"
+          placeholder="Password"
+          #userPwd
+          required
+        />
       </div>
 
       <div class="formGroup">
-        <input type="button" class="btn btnPrimary" value="Sign Up" (click)="authService.SignUp(userEmail.value, userPwd.value)">
+        <input
+          type="button"
+          class="btn btnPrimary"
+          value="Sign Up"
+          (click)="authService.SignUp(userEmail.value, userPwd.value)"
+        />
       </div>
 
       <div class="formGroup">
@@ -22,9 +51,25 @@
 
       <!-- Continue with Google -->
       <div class="formGroup">
-        <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
+        <button
+          type="button"
+          class="btn googleBtn"
+          (click)="authService.GoogleAuth()"
+        >
           <i class="fab fa-google-plus-g"></i>
           Continue with Google
+        </button>
+      </div>
+
+      <!-- Continue with Facebook-->
+      <div class="formGroup">
+        <button
+          type="button"
+          class="btn facebookBtn"
+          (click)="authService.FacebookAuth()"
+        >
+          <i class="fab fa-facebook-f"></i>
+          Log in with Facebook
         </button>
       </div>
 
@@ -33,9 +78,14 @@
       </div>
 
       <div class="redirectToLogin">
-        <span>Already have an account? <span class="redirect" routerLink="/sign-in">Log In</span></span>
+        <span
+          >Already have an account?
+          <span class="redirect" routerLink="/sign-in">Log In</span></span
+        >
       </div>
-
-    </div> 
+      <div class="redirectToLogin">
+        <span><span class="redirect" routerLink="/">Home</span></span>
+      </div>
+    </div>
   </div>
 </div>

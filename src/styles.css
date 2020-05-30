@@ -341,9 +341,13 @@ a:not([href]):not([tabindex]):hover {
   font-size: 14px;
 }
 
-.bg-dark {
-  background-color: #eb5e4c !important;
+.bg-orange {
+  background-color: #f4511e;
 }
+/*.bg-dark {
+  background-color: rgb(238, 92, 39) !important;
+}
+*/
 
 .gap-right {
   margin-right: 10px;

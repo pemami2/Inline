@@ -2,17 +2,19 @@ import { Component, OnInit, NgZone } from "@angular/core";
 import { AuthService } from "../../shared/services/auth.service";
 import { Router } from "@angular/router";
 import { ModalService } from "src/app/_modal";
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from "@angular/fire/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
-
+import { HttpClient } from "@angular/common/http";
 interface Owner {
   uid: string;
   message: string;
   photoURL: string;
   tablearray: { name: string; phone: number; size: number; time: number }[];
+}
+interface Post {
+  message: string;
+  number: string;
+  subject: string;
 }
 
 @Component({
@@ -22,7 +24,7 @@ interface Owner {
 })
 export class DashboardComponent implements OnInit {
   //document observable
-
+  posts: Observable<any>;
   owner: Observable<Owner>;
   ownerData: any;
 
@@ -39,7 +41,8 @@ export class DashboardComponent implements OnInit {
     public router: Router,
     public ngZone: NgZone,
     private modalService: ModalService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private http: HttpClient
   ) {}
   ngOnInit() {}
 
@@ -79,6 +82,8 @@ export class DashboardComponent implements OnInit {
   }
 
   async sendSMS(phoneNum, uid, name) {
+    //var myURL = "http://35.247.121.174:3000";
+
     console.log(
       "normal message in sendSMS: ",
       this.authService.userData.message
@@ -89,6 +94,14 @@ export class DashboardComponent implements OnInit {
     console.log(myMessage);
     var myString = myMessage.replace(/\s/g, "%20");
     console.log(myString, phoneNum);
+    /*
+    const data: Post = {
+      message: myMessage,
+      number: phoneNum,
+      subject: "testsubject",
+    };
+
+    this.posts = this.http.get(myURL); */
 
     var myURL =
       "http://35.247.121.174:3000/?message=" +
@@ -102,9 +115,11 @@ export class DashboardComponent implements OnInit {
     popup.blur();
     window.focus();
     setTimeout(() => {
-      popup.close();
+      popup.location.assign("http://localhost:4200/sent");
     }, 3000);
-    //document.getElementById("messagebutton").style.color = "grey"
+
+    //this.getConfig(myURL);
+
     var myList = this.authService.userData.tablearray;
 
     for (var i = 0; i < myList.length; i++) {

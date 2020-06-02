@@ -78,3 +78,8 @@ p {
   line-height: 1.8;
   color: #818181;
 }
+
+footer {
+  padding: 30px;
+  background-image: url(../../../assets/100.jpg);
+}

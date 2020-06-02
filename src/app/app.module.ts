@@ -21,14 +21,13 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { environment } from "../environments/environment";
-import { HttpClientModule } from "@angular/common/http";
 
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
 import { HomeComponent } from "./components/home/home.component";
-import { SentComponent } from './sent/sent.component';
-import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
-import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { SentComponent } from "./sent/sent.component";
+import { TermsOfServiceComponent } from "./terms-of-service/terms-of-service.component";
+import { PrivacyPolicyComponent } from "./privacy-policy/privacy-policy.component";
 
 @NgModule({
   declarations: [
@@ -53,7 +52,6 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
     AngularFirestoreModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

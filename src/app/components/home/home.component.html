@@ -17,33 +17,15 @@
       <a routerLink="sign-in" class="nav-link">Sign In</a>
     </li>
   </ul>
-
-  <!--<a href="/sign-in">Sign In</a>
-    <img class="logo" src="../../../assets/InLine logo.png" alt="">
-    <a routerLink="/sign-in" style="position:absolute; right: 20px; top: 20px;">Sign In</a>-->
 </nav>
-
-<!-- <Button click="authService.SignOut()">Sign In</Button>-->
 <div id="top" class="full-page">
   <div id="top" class="cover-page">
     <p class="title1">Seating Simplified</p>
   </div>
   <div class="container-fluid">
-    <!--<div class="row">
-        <p class="description-header"> In-Line is a light-weight, easy-to-use wait list managment systems designed for restaurants and other businesses alike</p>
-            <ul>
-                <li><i class="fas fa-wifi"></i>Web-based application, making it accesible on just about any device with a network connection</li>
-                <li>Optomized for speed through real-time technologies</li>
-                <li>Reliable even under poor network connection</li>
-                <li>Capable of serving concurrent users</li>
-                <li>Social login capablities such as Google and Facebook </li>
-                <li>Customizable text messaging functionality for reaching customers</li>
-                <li>Live time-tracking for each individual party</li>
-            </ul>
-        </div>-->
     <div id="services" class="container-fluid text-center">
       <p class="description-header">
-        In-Line is a light-weight, easy-to-use wait list managment systems
+        In-Line is a light-weight, easy-to-use wait list managment system
         designed for restaurants and other businesses alike
       </p>
       <br />
@@ -103,14 +85,20 @@
   <footer>
     <div class="row text-center">
       <div class="col-md-4">
-        <h4 routerLink="/terms_of_service" style="color: whitesmoke;">
+        <a
+          routerLink="/terms_of_service"
+          style="font-size: larger; color: whitesmoke;"
+        >
           Terms of Service
-        </h4>
+        </a>
       </div>
       <div class="col-md-4">
-        <h4 routerLink="/privacy_policy" style="color: whitesmoke;">
+        <a
+          routerLink="/privacy_policy"
+          style="font-size: larger; color: whitesmoke;"
+        >
           Privacy Policy
-        </h4>
+        </a>
       </div>
       <div class="col-md-4">
         <a class="" href="#"

@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
     popup.blur();
     window.focus();
     setTimeout(() => {
-      popup.location.assign("http://localhost:4200/sent");
+      popup.location.assign("/sent");
     }, 3000);
 
     var myList = this.authService.userData.tablearray;

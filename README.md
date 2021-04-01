@@ -9,4 +9,4 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Manual
 
 ### Home Page
-![picture](Inline/Inline_photos/Home.PNG)
+![picture](Inline_photos/Home.PNG)

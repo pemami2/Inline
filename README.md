@@ -19,7 +19,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ### User Accounts
 Inline gives you the option to create an account using your email, google, or facebook account thanks to our OAuth2 integrations.
 
-![picture](Inline_photos/Sign-On.PNG)
+![picture](Inline_photos/Sign-on.PNG)
 
 
 ### Dashboard
